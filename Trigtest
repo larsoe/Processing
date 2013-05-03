@@ -1,4 +1,5 @@
-/Test various code methods and math functions
+/test various code and math functions
+/ v 1.2
 
 int hight = 400;
 int length = 400;
@@ -8,6 +9,8 @@ int r = 150;
 float a = 0;
 float x;
 float y;
+float angleA;
+float angleB;
 PFont f;                          // STEP 2 Declare PFont variable
 
 void setup() {
@@ -18,7 +21,7 @@ void setup() {
 
 void draw() {
   
-  if(mousePressed == true) {
+  if(mousePressed && mouseButton == LEFT) {
    frameRate(1); 
   } else {
   frameRate(60);  
@@ -34,21 +37,25 @@ void draw() {
   x = cx + r * cos(a);
   y = cy + r * sin(a);
   point(x,y);
-  
+
   stroke(0);
   fill(200,200,50);
   triangle(cx,cy,x,y,x,cy);
-  r = int(map(mouseX,0,400,5,190));
-  float k1 = float(cx) - x;
-  float k2 = float(cy) - y;
+  if (mousePressed && mouseButton == RIGHT){
+    r = int(map(mouseX,0,400,5,190));
+    }
+  float k1 = abs(float(cx) - x);
+  float k2 = abs(float(cy) - y);
+  angleA = abs(degrees(asin(k2/r)));
+  angleB = abs(degrees(acos(k2/r)));
   textFont(f,16);                 // STEP 4 Specify font to be used
   fill(0);                        // STEP 5 Specify font color 
   text("Circle radius " + r,5,20);  
   text("Circle circumsphere " + round(2*r*PI),5,35);  
   text("Circle area " + round(PI*pow(r,2)),5,50);
-  text("Katet 1: " + round(k1) ,5,65);
-  text("Katet 2: " + round(k2) ,5,80);
+  text("Katet 1: " + abs(round(k1)) ,5,65);
+  text("Katet 2: " + abs(round(k2)) ,5,80);
   text("Hypotenus: " + round(sqrt(pow(k1,2)+pow(k2,2))) ,5,95);
-  text("A: " +  ,5,350);
-  
+  text("A: " + angleA ,5,350);
+  text("B: " + angleB ,5,365);
 }
