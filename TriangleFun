@@ -1,0 +1,44 @@
+// Playing with triangles
+// verson 1.0
+
+int triA_X = 200;
+int triA_Y = 200;
+
+int triB_X = 50;
+int triB_Y = 100;
+
+int triC_X = 250;
+int triC_Y = 200;
+
+
+void setup(){
+  
+  size(400,400);
+}
+
+void draw (){
+ 
+  background(255);
+ ellipse(triA_X,triA_Y,20,20); 
+ ellipse(triB_X,triB_Y,20,20);
+ ellipse(triC_X,triC_Y,20,20);
+ triangle(triB_X,triB_Y,triC_X,triC_Y,triA_X,triA_Y); 
+  
+}
+
+void mouseDragged(){
+ if (triA_X + 10 > mouseX && triA_X - 10 < mouseX && triA_Y + 10 > mouseY && triA_Y - 10 < mouseY){
+   triA_X = mouseX;
+   triA_Y = mouseY;
+ }
+ if (triB_X + 10 > mouseX && triB_X - 10 < mouseX && triB_Y + 10 > mouseY && triB_Y - 10 < mouseY){
+   triB_X = mouseX;
+   triB_Y = mouseY;
+ }
+  if (triC_X + 10 > mouseX && triC_X - 10 < mouseX && triC_Y + 10 > mouseY && triC_Y - 10 < mouseY){
+   triC_X = mouseX;
+   triC_Y = mouseY;
+ }
+}  
+ 
+
