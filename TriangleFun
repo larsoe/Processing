@@ -34,9 +34,9 @@ void draw (){
  float lineAB = sqrt(pow((triA_X-triB_X),2) + pow((triA_Y - triB_Y),2)); // calculate line AB
  float lineBC = sqrt(pow((triB_X-triC_X),2) + pow((triB_Y - triC_Y),2)); // calculate line BC
  float lineCA = sqrt(pow((triC_X-triA_X),2) + pow((triC_Y - triA_Y),2)); // calculate line CA
- float angleA =  //base on "law of cosinus" from http://www.mathsisfun.com/algebra/trig-solving-sss-triangles.html
- float angleB =
- float angleC =
+ float angleA = degrees(acos((pow(lineAB,2)+pow(lineCA,2)-pow(lineBC,2))/(2*(lineAB*lineCA)))); //base on "law of cosinus" from http://www.mathsisfun.com/algebra/trig-solving-sss-triangles.html
+ // har feil....  float angleB = degrees(acos((pow(lineBC,2)+pow(lineAB,2)-pow(lineCA,2))/(2*(lineCA*lineBC)))); //base on "law of cosinus" from http://www.mathsisfun.com/algebra/trig-solving-sss-triangles.html
+ float angleC = 180 - (angleA+angleB);
  areaTri = ((lineAB + lineBC + lineCA) / 2 );
  areaTri = (sqrt(areaTri*(areaTri - lineAB)*(areaTri - lineBC)*(areaTri - lineCA)));  //Calculate Area based on Heron's formula
  
@@ -49,8 +49,10 @@ text("Line AB: " + lineAB,10,20);
 text("Line BC: " + lineBC,10,30);  
 text("Line CA: " + lineCA,10,40);
 text("Areal: " + areaTri,10,50);
-
-println(lineAB);
+text("Angle A: " + angleA,150,20);
+text("Angle B: " + angleB,150,30);
+text("Angle C: " + angleC,150,40);
+println(angleA);
 
 point(triA_X,triB_Y);
 
@@ -72,4 +74,3 @@ void mouseDragged(){
 
 
 }  
- 
