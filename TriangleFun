@@ -1,5 +1,5 @@
 // Playing with triangles
-// verson 1.0
+// verson 1.2b
 
 int triA_X = 200;
 int triA_Y = 200;
@@ -10,6 +10,7 @@ int triB_Y = 100;
 int triC_X = 250;
 int triC_Y = 200;
 
+float areaTri;
 
 PFont f;                          // STEP 2 Declare PFont variable
 
@@ -30,13 +31,25 @@ void draw (){
  ellipse(triB_X,triB_Y,20,20);
  ellipse(triC_X,triC_Y,20,20);
  triangle(triB_X,triB_Y,triC_X,triC_Y,triA_X,triA_Y); 
+ float lineAB = sqrt(pow((triA_X-triB_X),2) + pow((triA_Y - triB_Y),2)); // calculate line AB
+ float lineBC = sqrt(pow((triB_X-triC_X),2) + pow((triB_Y - triC_Y),2)); // calculate line BC
+ float lineCA = sqrt(pow((triC_X-triA_X),2) + pow((triC_Y - triA_Y),2)); // calculate line CA
+ float angleA =  //base on "law of cosinus" from http://www.mathsisfun.com/algebra/trig-solving-sss-triangles.html
+ float angleB =
+ float angleC =
+ areaTri = ((lineAB + lineBC + lineCA) / 2 );
+ areaTri = (sqrt(areaTri*(areaTri - lineAB)*(areaTri - lineBC)*(areaTri - lineCA)));  //Calculate Area based on Heron's formula
+ 
 textFont(f,10);                 // STEP 4 Specify font to be used
 fill(0);
 text("A: " + triA_X + "," + triA_Y,10,10);  // STEP 6 Display A Coordinate
 text("B: " + triB_X + "," + triB_Y,75,10);  // STEP 6 Display B Coordinate
 text("C: " + triC_X + "," + triC_Y,150,10);  // STEP 6 Display C Coordinate
+text("Line AB: " + lineAB,10,20);  
+text("Line BC: " + lineBC,10,30);  
+text("Line CA: " + lineCA,10,40);
+text("Areal: " + areaTri,10,50);
 
-float lineAB = sqrt(pow((triA_X-triB_X),2) + pow((triA_Y - triB_Y),2)); // calculate line AB
 println(lineAB);
 
 point(triA_X,triB_Y);
