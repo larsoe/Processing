@@ -11,19 +11,36 @@ int triC_X = 250;
 int triC_Y = 200;
 
 
+PFont f;                          // STEP 2 Declare PFont variable
+
+
 void setup(){
   
   size(400,400);
+    f = createFont("Arial",16,true); // STEP 3 Create Font
+
+   
 }
 
 void draw (){
  
-  background(255);
+ background(255);
+ fill(255);
  ellipse(triA_X,triA_Y,20,20); 
  ellipse(triB_X,triB_Y,20,20);
  ellipse(triC_X,triC_Y,20,20);
  triangle(triB_X,triB_Y,triC_X,triC_Y,triA_X,triA_Y); 
-  
+textFont(f,10);                 // STEP 4 Specify font to be used
+fill(0);
+text("A: " + triA_X + "," + triA_Y,10,10);  // STEP 6 Display A Coordinate
+text("B: " + triB_X + "," + triB_Y,75,10);  // STEP 6 Display B Coordinate
+text("C: " + triC_X + "," + triC_Y,150,10);  // STEP 6 Display C Coordinate
+
+float lineAB = sqrt(pow((triA_X-triB_X),2) + pow((triA_Y - triB_Y),2)); // calculate line AB
+println(lineAB);
+
+point(triA_X,triB_Y);
+
 }
 
 void mouseDragged(){
@@ -39,6 +56,7 @@ void mouseDragged(){
    triC_X = mouseX;
    triC_Y = mouseY;
  }
+
+
 }  
  
-
