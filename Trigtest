@@ -18,7 +18,7 @@ PFont f;                          // STEP 2 Declare PFont variable
 
 void setup() {
   size(hight,length);
-  f = createFont("Arial",6,true); // STEP 3 Create Font  
+  f = createFont("Arial",8,true); // STEP 3 Create Font  
 }
 
 
@@ -63,7 +63,7 @@ void draw() {
   float k2 = abs(float(cy) - y);
   angleA = abs(degrees(asin(k2/r)));
   angleB = abs(degrees(acos(k2/r)));
-  textFont(f,16);                 // STEP 4 Specify font to be used
+  textFont(f,8);                 // STEP 4 Specify font to be used
   fill(0);                        // STEP 5 Specify font color 
   text("Circle radius " + r,5,20);  
   text("Circle circumsphere " + round(2*r*PI),5,35);  
