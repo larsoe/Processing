@@ -1,26 +1,25 @@
 //Processing.org 2.1
-//Beziermovement2 
+//Beziermovement2
 // Aim: to create a line that will connect a "feeder planet" with a home base and ships that will transport "feed" between them.
 // while avoiding a back hole.
-
-
 
 int x;
 int y;
 int count = 1;
-int x1;  //   coordinates for the first anchor point
+int x1; // coordinates for the first anchor point
 int y1;
 
-int x2;  //  coordinates for the first control point
+int x2; // coordinates for the first control point
 int y2;
 
-int x3;  //  coordinates for the second control point
+int x3; // coordinates for the second control point
 int y3;
 
-int x4;  //  coordinates for the second anchor point
+int x4; // coordinates for the second anchor point
 int y4;
 
-PFont f;                          // Declare PFont variable
+int points = 0 ;
+PFont f; // Declare PFont variable
 float t = 0;
 float Tmovement = 0.01;
 float t2 = 0;
@@ -28,6 +27,13 @@ float Tmovement2 = 0.007;
 float t3 = 0;
 float Tmovement3 = 0.005;
 String statusText = "Set first point";
+int homeBaseX = 500;
+int homeBaseY = 500;
+int harvestMoonX = 200;
+int harvestMoonY = 150;
+int CanMovementGetPoints = 0;
+int CanMovement2GetPoints = 0;
+int CanMovement3GetPoints = 0;
 
 void setup() {
 
@@ -39,14 +45,15 @@ void draw() {
 
   background(0);
   stroke(255);
-  textFont(f, 16);                 // Specify font to be used
+  textFont(f, 16); // Specify font to be used
   drawBezier();
   fill(255);
   text(statusText, 10, 580);
-  println(count);
+
   Movement();
   Movement2();
   Movement3();
+  text("Points: " + points, 300, 570);
 }
 
 
@@ -55,18 +62,18 @@ void mouseClicked() {
   if (count == 1) {
     x1 = mouseX;
     y1 = mouseY;
-    statusText = "Set last point";
-  } 
-  else if (count == 4) {  
+    statusText = "Set Harvest point";
+  }
+  else if (count == 4) {
     x2 = mouseX;
     y2 = mouseY;
-    statusText = "Set first point";
-  } 
+    statusText = "Set Homebase point";
+  }
   else if (count == 3) {
     x3 = mouseX;
     y3 = mouseY;
     statusText = "Set last controll point";
-  } 
+  }
   else if (count == 2) {
     x4 = mouseX;
     y4 = mouseY;
@@ -76,21 +83,26 @@ void mouseClicked() {
 
   if (count < 4) {
     count = count +1;
-  } 
+  }
   else {
     count = 1;
   }
 }
 void drawBezier() {
 
-  fill(0);  
+  fill(0);
   bezier(x1, y1, x2, y2, x3, y3, x4, y4);
   fill(50, 50, 255);
   noStroke();
   ellipse(x1, y1, 20, 20);
   fill(255, 50, 50);
   ellipse(x4, y4, 20, 20);
-  println(x1, y1, x2, y2, x3, y3, x4, y4);
+
+
+  fill(0, 170, 170, 70);              //Homebasecolor
+  ellipse(homeBaseX, homeBaseY, 40, 40);          //Homebase draw
+  fill(250, 100, 100, 90);              //harvestMooncolor
+  ellipse(harvestMoonX, harvestMoonY, 30, 30);          //harvestMoonbase draw
 }
 
 void Movement() {
@@ -99,11 +111,22 @@ void Movement() {
   fill(150, 255, 100);
   noStroke();
   ellipse(x, y, 8, 8);
+  if (CanMovementGetPoints == 1) {      //Shows dot next to ball if carrying cargo
+    fill(255);          
+    ellipse(x+12, y-12, 3, 3);
+  }
   t = t + Tmovement;
-
   if ((t > 1)||(t < 0)) {
     Tmovement = Tmovement * -1;
   }
+  if ((sqrt(pow(x-homeBaseX, 2)+pow(y-homeBaseY, 2)) < 15) && (t < 0.02) && (CanMovementGetPoints == 1)) {
+    CanMovementGetPoints = 0;
+    points = points + 1;
+  }
+  if ((sqrt(pow(x-harvestMoonX, 2)+pow(y-harvestMoonY, 2)) < 15) && (t > 0.98) && (CanMovementGetPoints == 0)) {
+    CanMovementGetPoints = 1;
+  }
+
 }
 
 void Movement2() {
@@ -112,10 +135,20 @@ void Movement2() {
   noStroke();
   fill(255, 200, 170);
   ellipse(x, y, 12, 12);
+  if (CanMovement2GetPoints == 1) {      //Shows dot next to ball if carrying cargo
+    fill(255);          
+    ellipse(x+15, y-15, 3, 3);
+  }
   t2 = t2 + Tmovement2;
-
   if ((t2 > 1)||(t2 < 0)) {
     Tmovement2 = Tmovement2 * -1;
+  }
+  if ((sqrt(pow(x-homeBaseX, 2)+pow(y-homeBaseY, 2)) < 15) && (t < 0.04) && (CanMovement2GetPoints == 1)) {
+    CanMovement2GetPoints = 0;
+    points = points + 1;
+  }
+  if ((sqrt(pow(x-harvestMoonX, 2)+pow(y-harvestMoonY, 2)) < 15) && (t > 0.98) && (CanMovement2GetPoints == 0)) {
+    CanMovement2GetPoints = 1;
   }
 }
 
@@ -125,9 +158,23 @@ void Movement3() {
   fill(0, 255, 170);
   noStroke();
   ellipse(x, y, 14, 14);
+  if (CanMovement3GetPoints == 1) {      //Shows dot next to ball if carrying cargo
+    fill(255);          
+    ellipse(x+18, y-18, 3, 3);
+  }
   t3 = t3 + Tmovement3;
 
   if ((t3 > 1)||(t3 < 0)) {
     Tmovement3 = Tmovement3 * -1;
   }
+
+  if ((sqrt(pow(x-homeBaseX, 2)+pow(y-homeBaseY, 2)) < 15) && (t < 0.02) && (CanMovement3GetPoints == 1)) {
+    CanMovement3GetPoints = 0;
+    points = points + 1;
+  }
+
+  if ((sqrt(pow(x-harvestMoonX, 2)+pow(y-harvestMoonY, 2)) < 15) && (t > 0.98) && (CanMovement3GetPoints == 0)) {
+    CanMovement3GetPoints = 1;
+  }
 }
+
