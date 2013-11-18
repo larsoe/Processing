@@ -1,0 +1,132 @@
+//Beziermovement2 
+// Aim: to create a line that will connect a "feeder planet" with a home base and ships that will transport "feed" between them.
+// while avoiding a back hole.
+
+
+
+int x;
+int y;
+int count = 1;
+int x1;  //   coordinates for the first anchor point
+int y1;
+
+int x2;  //  coordinates for the first control point
+int y2;
+
+int x3;  //  coordinates for the second control point
+int y3;
+
+int x4;  //  coordinates for the second anchor point
+int y4;
+
+PFont f;                          // Declare PFont variable
+float t = 0;
+float Tmovement = 0.01;
+float t2 = 0;
+float Tmovement2 = 0.007;
+float t3 = 0;
+float Tmovement3 = 0.005;
+String statusText = "Set first point";
+
+void setup() {
+
+  size(600, 600);
+  f = createFont("Arial", 8, true);
+}
+
+void draw() {
+
+  background(0);
+  stroke(255);
+  textFont(f, 16);                 // Specify font to be used
+  drawBezier();
+  fill(255);
+  text(statusText, 10, 580);
+  println(count);
+  Movement();
+  Movement2();
+  Movement3();
+}
+
+
+void mouseClicked() {
+
+  if (count == 1) {
+    x1 = mouseX;
+    y1 = mouseY;
+    statusText = "Set last point";
+  } 
+  else if (count == 4) {  
+    x2 = mouseX;
+    y2 = mouseY;
+    statusText = "Set first point";
+  } 
+  else if (count == 3) {
+    x3 = mouseX;
+    y3 = mouseY;
+    statusText = "Set last controll point";
+  } 
+  else if (count == 2) {
+    x4 = mouseX;
+    y4 = mouseY;
+    statusText = "Set first controll point";
+  }
+
+
+  if (count < 4) {
+    count = count +1;
+  } 
+  else {
+    count = 1;
+  }
+}
+void drawBezier() {
+
+  fill(0);  
+  bezier(x1, y1, x2, y2, x3, y3, x4, y4);
+  fill(50, 50, 255);
+  noStroke();
+  ellipse(x1, y1, 20, 20);
+  fill(255, 50, 50);
+  ellipse(x4, y4, 20, 20);
+  println(x1, y1, x2, y2, x3, y3, x4, y4);
+}
+
+void Movement() {
+  float x = bezierPoint(x1, x2, x3, x4, t);
+  float y = bezierPoint(y1, y2, y3, y4, t);
+  fill(150, 255, 100);
+  noStroke();
+  ellipse(x, y, 8, 8);
+  t = t + Tmovement;
+
+  if ((t > 1)||(t < 0)) {
+    Tmovement = Tmovement * -1;
+  }
+}
+
+void Movement2() {
+  float x = bezierPoint(x1, x2, x3, x4, t2);
+  float y = bezierPoint(y1, y2, y3, y4, t2);
+  noStroke();
+  fill(255, 200, 170);
+  ellipse(x, y, 12, 12);
+  t2 = t2 + Tmovement2;
+
+  if ((t2 > 1)||(t2 < 0)) {
+    Tmovement2 = Tmovement2 * -1;
+  }
+}
+
+void Movement3() {
+  float x = bezierPoint(x1, x2, x3, x4, t3);
+  float y = bezierPoint(y1, y2, y3, y4, t3);
+  fill(0, 255, 170);
+  noStroke();
+  ellipse(x, y, 14, 14);
+  t3 = t3 + Tmovement3;
+
+  if ((t3 > 1)||(t3 < 0)) {
+    Tmovement3 = Tmovement3 * -1;
+  }
+}
