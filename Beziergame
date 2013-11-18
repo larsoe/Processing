@@ -53,7 +53,7 @@ void draw() {
   Movement();
   Movement2();
   Movement3();
-  text("Points: " + points, 300, 570);
+  text("Points: " + points + "     Millis: " + millis()/1000, 300, 570);
 }
 
 
@@ -143,11 +143,11 @@ void Movement2() {
   if ((t2 > 1)||(t2 < 0)) {
     Tmovement2 = Tmovement2 * -1;
   }
-  if ((sqrt(pow(x-homeBaseX, 2)+pow(y-homeBaseY, 2)) < 15) && (t < 0.04) && (CanMovement2GetPoints == 1)) {
+  if ((sqrt(pow(x-homeBaseX, 2)+pow(y-homeBaseY, 2)) < 15) && (t2 < 0.02) && (CanMovement2GetPoints == 1)) {
     CanMovement2GetPoints = 0;
     points = points + 1;
   }
-  if ((sqrt(pow(x-harvestMoonX, 2)+pow(y-harvestMoonY, 2)) < 15) && (t > 0.98) && (CanMovement2GetPoints == 0)) {
+  if ((sqrt(pow(x-harvestMoonX, 2)+pow(y-harvestMoonY, 2)) < 15) && (t2 > 0.98) && (CanMovement2GetPoints == 0)) {
     CanMovement2GetPoints = 1;
   }
 }
@@ -168,13 +168,12 @@ void Movement3() {
     Tmovement3 = Tmovement3 * -1;
   }
 
-  if ((sqrt(pow(x-homeBaseX, 2)+pow(y-homeBaseY, 2)) < 15) && (t < 0.02) && (CanMovement3GetPoints == 1)) {
+  if ((sqrt(pow(x-homeBaseX, 2)+pow(y-homeBaseY, 2)) < 15) && (t3 < 0.02) && (CanMovement3GetPoints == 1)) {
     CanMovement3GetPoints = 0;
     points = points + 1;
   }
 
-  if ((sqrt(pow(x-harvestMoonX, 2)+pow(y-harvestMoonY, 2)) < 15) && (t > 0.98) && (CanMovement3GetPoints == 0)) {
+  if ((sqrt(pow(x-harvestMoonX, 2)+pow(y-harvestMoonY, 2)) < 15) && (t3 > 0.98) && (CanMovement3GetPoints == 0)) {
     CanMovement3GetPoints = 1;
   }
 }
-
