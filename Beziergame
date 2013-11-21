@@ -39,6 +39,7 @@ void setup() {
   size(600, 600);
   f = createFont("Arial", 8, true);
   ellipseMode(CENTER);
+  harvestMoonPoints();
 }
 
 void draw() {
@@ -195,6 +196,9 @@ void harvestMoonPoints() {
   if (harvestMoonPoints==0) {
     harvestMoonX = int(random(20, 580)); 
     harvestMoonY = int(random(20, 580));
+    if(((homeBaseX - 50) < (harvestMoonX)) && ((harvestMoonX) > (homeBaseX + 50))  && ((homeBaseY - 50) < (harvestMoonY)) && ((harvestMoonY) > (homeBaseY + 50))){
+    harvestMoonPoints();
+    }
     harvestMoonPoints = int(random(5, 25));
   }
 }
