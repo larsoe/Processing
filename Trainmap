@@ -1,0 +1,53 @@
+//Trainmap
+
+float posX = 0;
+float posY = 0;
+int destX = 0;
+int destY = 0;
+int segment = 0; 
+float[] train = {segment, posY , posX,destY,destX};
+
+void setup(){
+
+size(600,300);
+
+}
+
+
+void draw(){
+ 
+mapdraw();
+updateTrain();
+drawTrain();
+
+}
+
+void drawTrain(){
+fill(0,255,0);  
+ellipse(posY,posX,15,15);  
+}
+
+void updateTrain(){
+if (segment == 1){
+  destY = 250;
+  destX = 150;  
+  }
+//needs work...
+posY = (posY - destY) +1;
+posX = (posX - destX) +1;
+  
+}
+
+
+void mapdraw(){
+background(0);
+stroke(255);
+fill(255,0,0);
+line(50,150,250,150);
+line(250,150,350,200);
+line(350,200,550,200);
+ellipse(50,150,10,10);
+ellipse(250,150,10,10);
+ellipse(350,200,10,10);
+ellipse(550,200,10,10);
+}
