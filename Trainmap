@@ -1,53 +1,85 @@
-//Trainmap
+//Example from book Processing a programming handbook for visual design, page 283 
 
-float posX = 0;
-float posY = 0;
-int destX = 0;
-int destY = 0;
-int segment = 0; 
-float[] train = {segment, posY , posX,destY,destX};
 
-void setup(){
 
-size(600,300);
+float distX;
+float distY; 
+float x;
+float y;
+float step = 0.01;
+float pct = 0.0;
+int route = 1;
+int[] stationX = {
+  50, 250, 150, 270
+};
+int[] stationY = {
+  250, 250, 100, 50
+};
+float beginX = stationX[0];
+float beginY = stationY[0];
+float endX = stationX[1];
+float endY = stationY[1];
 
+void setup()  {
+
+  background(255); 
+
+  smooth();
+
+  size(300, 300);
+  distX = endX - beginX;
+  distY = endY - beginY;
 }
 
+void draw() {
 
-void draw(){
- 
-mapdraw();
-updateTrain();
-drawTrain();
-
-}
-
-void drawTrain(){
-fill(0,255,0);  
-ellipse(posY,posX,15,15);  
-}
-
-void updateTrain(){
-if (segment == 1){
-  destY = 250;
-  destX = 150;  
+  triangle();
+  println(route);
+  pct += step;
+  if (pct < 1.0) {
+    x = beginX + (pct * distX);
+    y = beginY + (pct * distY);
   }
-//needs work...
-posY = (posY - destY) +1;
-posX = (posX - destX) +1;
-  
+  else {
+    beginX = endX;
+    beginY = endY;
+    switch(route) {
+    case 0:
+      endX = stationX[route];
+      endY =  stationY[route];
+      route = 1;
+      break;
+    case 1:
+      endX = stationX[route];
+      endY = stationY[route];
+      route = 2;
+      break;
+    case 2:  
+      endX = stationX[route];
+      endY = stationY[route];
+      route = 3;
+      break;
+    case 3:  
+      endX = stationX[route];
+      endY = stationY[route];
+      route = 0;
+      break;
+    }
+    distX = endX - beginX;
+    distY = endY - beginY;
+    pct = 0.0;
+  }
+
+  ellipse(x, y, 7, 7);
 }
 
 
-void mapdraw(){
-background(0);
-stroke(255);
-fill(255,0,0);
-line(50,150,250,150);
-line(250,150,350,200);
-line(350,200,550,200);
-ellipse(50,150,10,10);
-ellipse(250,150,10,10);
-ellipse(350,200,10,10);
-ellipse(550,200,10,10);
+
+void triangle() {
+  background(255); 
+  line(stationX[0], stationY[0], stationX[1], stationY[1]);
+  line(stationX[1], stationY[1], stationX[2], stationY[2]);
+  line(stationX[2], stationY[2], stationX[3], stationY[3]);
+  line(stationX[3], stationY[3], stationX[0], stationY[0]);
 }
+
