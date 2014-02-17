@@ -1,7 +1,5 @@
 //Example from book Processing a programming handbook for visual design, page 283 
 
-
-
 float distX;
 float distY; 
 float x;
@@ -9,24 +7,25 @@ float y;
 float step = 0.01;
 float pct = 0.0;
 int route = 1;
-int[] stationX = {
-  50, 250, 150, 270
-};
 int[] stationY = {
-  250, 250, 100, 50
+  100, 100, 150, 150,150,200,200
+};
+int[] stationX = {
+  50,125,200,275,350,425,500
 };
 float beginX = stationX[0];
 float beginY = stationY[0];
 float endX = stationX[1];
 float endY = stationY[1];
+int routeCount = 6;    //number of routes (0 ... 6)
 
 void setup()  {
 
-  background(255); 
+  background(0); 
 
   smooth();
 
-  size(300, 300);
+  size(700, 300);
   distX = endX - beginX;
   distY = endY - beginY;
 }
@@ -36,6 +35,8 @@ void draw() {
   triangle();
   println(route);
   pct += step;
+  
+  
   if (pct < 1.0) {
     x = beginX + (pct * distX);
     y = beginY + (pct * distY);
@@ -43,7 +44,7 @@ void draw() {
   else {
     beginX = endX;
     beginY = endY;
-    switch(route) {
+    switch(route) {        //Routing plan
     case 0:
       endX = stationX[route];
       endY =  stationY[route];
@@ -62,24 +63,42 @@ void draw() {
     case 3:  
       endX = stationX[route];
       endY = stationY[route];
+      route = 4;
+      break;
+      case 4:  
+      endX = stationX[route];
+      endY = stationY[route];
+      route = 5;
+      break;
+      case 5:  
+      endX = stationX[route];
+      endY = stationY[route];
+      route = 6;
+      break;
+      case 6:  
+      endX = stationX[route];
+      endY = stationY[route];
       route = 0;
       break;
+      
     }
     distX = endX - beginX;
     distY = endY - beginY;
     pct = 0.0;
   }
 
-  ellipse(x, y, 7, 7);
+  ellipse(x, y, 7, 7);    //draw train
 }
 
 
 
 void triangle() {
-  background(255); 
-  line(stationX[0], stationY[0], stationX[1], stationY[1]);
-  line(stationX[1], stationY[1], stationX[2], stationY[2]);
-  line(stationX[2], stationY[2], stationX[3], stationY[3]);
-  line(stationX[3], stationY[3], stationX[0], stationY[0]);
+  background(0);
+  stroke(0,255,0); 
+ for (int i = 0; i < routeCount; i=i+1){              //Draw lines
+    line(stationX[i], stationY[i], stationX[i+1], stationY[i+1]);
+  }
+  for (int i = 0; i < routeCount+1; i=i+1){      //draw stations
+    line(stationX[i],stationY[i]-5,stationX[i],stationY[i]+5);
+  }
 }
-
