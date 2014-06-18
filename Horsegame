@@ -5,19 +5,21 @@
 int numHorse = 4;
 horse[] horses = new horse[numHorse];
 int[] startpos = {
-  170, 190, 210, 230
+  170, 190, 210, 230,
 };
+
+
 void setup() {
   size(600, 300);
   for (int i = 0; i < numHorse; i++) {
-    horses[i] = new horse(85, startpos[i], random(1,5), i);
+    horses[i] = new horse(85, startpos[i], random(1,5), i,int(random(0,200)));
   }
 }
 
 void draw() {
-  drawArena(); 
+  drawArena();
   for (int i = 0; i < numHorse; i++) {
-    horses[i].move(); 
+    horses[i].move();
     horses[i].display();
   }
 }
@@ -31,8 +33,8 @@ void drawArena() {
   rect(50, 150, 500, 100, 7);
   stroke(255);
   fill(255);
-  rect(100, 160, 3, 80);      //startpoint
-  rect(480, 160, 3, 80);      //goal
+  rect(100, 160, 3, 80); //startpoint
+  rect(480, 160, 3, 80); //goal
 
   for (int i = 138; i < 480; i = i + 38) {
     rect(i, 160, 1, 80);
@@ -40,29 +42,36 @@ void drawArena() {
 }
 
 
-class horse {      //describe horse
+class horse { //describe horse
   float x, y;
   float vx = 0;
   float vy = 0;
   float speed;
   int id;
+  int horseColor;
 
-  horse(float xin, float yin, float speedin, int id) {
+  horse(float xin, float yin, float speedin, int idin, int horseColorin) {
     x = xin;
     y = yin;
     speed = speedin;
-    id = id;
+    id = idin;
+    horseColor = horseColorin;
   }
 
 
 
   void display() {
-    stroke(4);
+    stroke(horseColor);
+    fill(horseColor);
     ellipse(x, y, 6, 3);
   }
 
 
   void move() {
     x += speed;
+    if (x >= 490){
+      speed = 0;
+      println(id);
+    }
+    }
   }
-}
