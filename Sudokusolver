@@ -95,24 +95,23 @@ void checkPoss() {
   }
 
   inventory.sort();
-
   for (int n = 0; inventory.get(0) == 0; n = 0) { //removes "0" values
     inventory.remove(0);
   }
+
   for (int n = 0; n < inventory.size()-1; n = n +1) { //removes duplicates
     if (inventory.get(n) == inventory.get(n+1)) {
       inventory.remove(n);
     }
   }
-
-  println("test: " + inventory);
-
-  for (int n = 1; n == 9; n = n + 1) {      // should create a pencilmark list if bloody thing could work....
-    if (inventory.hasValue(n) == false ) {
+  
+  for (int n = 1; n < 10; n = n + 1) {      // should create a pencilmark list if bloody thing could work....
+    if (inventory.hasValue(n) == false) {
       pencilmark.append(n);
     }
   } 
 
+  println("test: " + inventory);
   println("Pencilmark: " + pencilmark);
 }
 
