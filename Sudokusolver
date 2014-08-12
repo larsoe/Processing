@@ -1,49 +1,63 @@
 //Processing 2.1
 //Sodukosolver --- work very much in progress
-
-
-int x;
-int y;
+int x = 6;
+int y =  3;
 int[] possible;
 int startSheet[][] = {
-
-  {    0, 0, 5, 0, 0, 3, 0, 4, 0  }  , 
-  {    0, 0, 7, 0, 0, 9, 1, 2, 0  }  , 
-  {    0, 2, 0, 0, 0, 0, 0, 0, 0  }  , 
-  {    0, 5, 0, 8, 1, 6, 0, 0, 3  }  , 
-  {    4, 0, 0, 3, 0, 7, 0, 0, 6  }  , 
-  {    1, 0, 0, 4, 9, 2, 0, 5, 0  }  , 
-  {    0, 0, 0, 0, 0, 0, 0, 3, 0  }  , 
-  {    0, 3, 4, 5, 0, 0, 8, 0, 0  }  , 
-  {    0, 8, 0, 2, 0, 0, 9, 0, 0  }};
-
-
+  { 
+    0, 0, 5, 0, 0, 3, 0, 4, 0
+  } 
+  , 
+  { 
+    0, 0, 7, 0, 0, 9, 1, 2, 0
+  } 
+  , 
+  { 
+    0, 2, 0, 0, 0, 0, 0, 0, 0
+  } 
+  , 
+  { 
+    0, 5, 0, 8, 1, 6, 0, 0, 3
+  } 
+  , 
+  { 
+    4, 0, 0, 3, 0, 7, 0, 0, 6
+  } 
+  , 
+  { 
+    1, 0, 0, 4, 9, 2, 0, 5, 0
+  } 
+  , 
+  { 
+    0, 0, 0, 0, 0, 0, 0, 3, 0
+  } 
+  , 
+  { 
+    0, 3, 4, 5, 0, 0, 8, 0, 0
+  } 
+  , 
+  { 
+    0, 8, 0, 2, 0, 0, 9, 0, 0
+  }
+};
 PFont f;
 IntList inventory;
 IntList pencilmark;
-
-
 void setup() {
   size(600, 300);
   f = createFont("Areal", 12, true);
 }
-
-
 void draw() {
   background(200);
   drawStartSheet();
   drawSolutionSheet();
   checkPoss();
   highlight();
+noLoop();
 }
-
-
-
 void drawStartSheet() {
-
   textFont(f, 12);
   fill(0);
-
   int a = 20;
   int b = 20;
   for (int j = 0; j < 9; j = j+1) {
@@ -55,7 +69,6 @@ void drawStartSheet() {
     b = 20;
   }
 }
-
 void drawSolutionSheet() {
   line(350, 10, 350, 190);
   line(410, 10, 410, 190);
@@ -63,7 +76,6 @@ void drawSolutionSheet() {
   line(300, 65, 470, 65);
   textFont(f, 12);
   fill(0);
-
   int a = 300;
   int b = 20;
   for (int j = 0; j < 9; j = j+1) {
@@ -77,17 +89,13 @@ void drawSolutionSheet() {
     b = 20;
   }
 }
-
 void checkPoss() {
-
   inventory = new IntList();
   pencilmark = new IntList();
-
-  for (int i = 0; i < 9; i = i+1) {        //for løkke viser hvilke verdier som er i x og y aksen
+ for (int i = 0; i < 9; i = i+1) { //for løkke viser hvilke verdier som er i x og y aksen
     inventory.append(startSheet[x][i]);
     inventory.append(startSheet[i][y]);
   }
-
   for (int i = floor(y/3)*3; i < floor(y/3)*3 + 3 ; i = i+1) { //for løkke viser hvilke verdier som er i "ruta"
     for (int j = floor(x/3)*3; j < floor(x/3)*3 + 3 ; j = j+1) {
       inventory.append(startSheet[i][j]);
@@ -98,26 +106,22 @@ void checkPoss() {
   for (int n = 0; inventory.get(0) == 0; n = 0) { //removes "0" values
     inventory.remove(0);
   }
-
-  for (int n = 0; n < inventory.size()-1; n = n +1) { //removes duplicates
-    if (inventory.get(n) == inventory.get(n+1)) {
+  println("Inventory: " + inventory);
+  for (int n = 1; n < inventory.size(); n = n +1) { //removes duplicates
+    if (inventory.get(n) == inventory.get(n-1)) {
       inventory.remove(n);
+      n = n-1;
     }
   }
-  
-  for (int n = 1; n < 10; n = n + 1) {      // should create a pencilmark list if bloody thing could work....
+  for (int n = 1; n < 10; n = n + 1) { // should create a pencilmark list if bloody thing could work....
     if (inventory.hasValue(n) == false) {
       pencilmark.append(n);
     }
-  } 
-
-  println("test: " + inventory);
+  }
+  println("Inventory: " + inventory);
   println("Pencilmark: " + pencilmark);
 }
-
-
 void highlight() { //draws a marker on where the mousepointer is
-
   if (mouseX >= 300 && mouseX <= 470 && mouseY >=20 && mouseY <=185) {
     noStroke();
     fill(255, 150);
@@ -127,7 +131,6 @@ void highlight() { //draws a marker on where the mousepointer is
     x = (mouseX-300)/(160/8); //determines which cell the mouse hovers over. (165 is the hight of the sheet, 9 is the number of cells)
     y = (mouseY-20)/(160/8);
     println(mouseX+ " " + mouseY + " X: " + x + " Y: " + y);
-
     stroke(0);
     fill(0);
   }
