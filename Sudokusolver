@@ -1,42 +1,42 @@
 //Processing 2.1
 //Sodukosolver --- work very much in progress
-int x = 6;
-int y =  3;
+int x;
+int y;
 int[] possible;
 int startSheet[][] = {
-  { 
+  {
     0, 0, 5, 0, 0, 3, 0, 4, 0
-  } 
+  }
   , 
-  { 
+  {
     0, 0, 7, 0, 0, 9, 1, 2, 0
-  } 
+  }
   , 
-  { 
+  {
     0, 2, 0, 0, 0, 0, 0, 0, 0
-  } 
+  }
   , 
-  { 
+  {
     0, 5, 0, 8, 1, 6, 0, 0, 3
-  } 
+  }
   , 
-  { 
+  {
     4, 0, 0, 3, 0, 7, 0, 0, 6
-  } 
+  }
   , 
-  { 
+  {
     1, 0, 0, 4, 9, 2, 0, 5, 0
-  } 
+  }
   , 
-  { 
+  {
     0, 0, 0, 0, 0, 0, 0, 3, 0
-  } 
+  }
   , 
-  { 
+  {
     0, 3, 4, 5, 0, 0, 8, 0, 0
-  } 
+  }
   , 
-  { 
+  {
     0, 8, 0, 2, 0, 0, 9, 0, 0
   }
 };
@@ -49,11 +49,12 @@ void setup() {
 }
 void draw() {
   background(200);
-  drawStartSheet();
-  drawSolutionSheet();
-  checkPoss();
+  //drawStartSheet();
+  //drawSolutionSheet();
+  //checkPoss();
   highlight();
-noLoop();
+  runthrough();
+  
 }
 void drawStartSheet() {
   textFont(f, 12);
@@ -92,7 +93,7 @@ void drawSolutionSheet() {
 void checkPoss() {
   inventory = new IntList();
   pencilmark = new IntList();
- for (int i = 0; i < 9; i = i+1) { //for løkke viser hvilke verdier som er i x og y aksen
+  for (int i = 0; i < 9; i = i+1) { //for løkke viser hvilke verdier som er i x og y aksen
     inventory.append(startSheet[x][i]);
     inventory.append(startSheet[i][y]);
   }
@@ -101,7 +102,6 @@ void checkPoss() {
       inventory.append(startSheet[i][j]);
     }
   }
-
   inventory.sort();
   for (int n = 0; inventory.get(0) == 0; n = 0) { //removes "0" values
     inventory.remove(0);
@@ -120,6 +120,11 @@ void checkPoss() {
   }
   println("Inventory: " + inventory);
   println("Pencilmark: " + pencilmark);
+  
+  if (pencilmark.size() == 1){
+   startSheet[x][y] = pencilmark.get(0); 
+  }
+  
 }
 void highlight() { //draws a marker on where the mousepointer is
   if (mouseX >= 300 && mouseX <= 470 && mouseY >=20 && mouseY <=185) {
@@ -134,4 +139,18 @@ void highlight() { //draws a marker on where the mousepointer is
     stroke(0);
     fill(0);
   }
+}
+
+
+void runthrough(){
+ for (x = 0; x < 9; x = x +1){
+  for (y = 0; y < 9; y = y +1){
+    if (startSheet[x][y] == 0){
+    println("runthrough x: " + x + " y: " + y);
+    checkPoss();
+    background(200);
+    drawStartSheet();
+    drawSolutionSheet();
+  }}}
+  
 }
