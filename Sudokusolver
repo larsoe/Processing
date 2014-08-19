@@ -2,44 +2,47 @@
 //Sodukosolver --- work very much in progress
 int x;
 int y;
-int[] possible;
+int logFile;
+
 int startSheet[][] = {
   {
-    0, 0, 5, 0, 0, 3, 0, 4, 0
+    0, 0, 1, 0, 2, 0, 0, 3, 5
   }
   , 
   {
-    0, 0, 7, 0, 0, 9, 1, 2, 0
+    0, 7, 0, 0, 9, 5, 2, 0, 8
   }
   , 
   {
-    0, 2, 0, 0, 0, 0, 0, 0, 0
+    0, 2, 8, 7, 0, 3, 0, 0, 1
   }
   , 
   {
-    0, 5, 0, 8, 1, 6, 0, 0, 3
+    7, 0, 6, 0, 4, 0, 0, 5, 9
   }
   , 
   {
-    4, 0, 0, 3, 0, 7, 0, 0, 6
+    4, 8, 0, 5, 0, 9, 6, 0, 0
   }
   , 
   {
-    1, 0, 0, 4, 9, 2, 0, 5, 0
+    0, 5, 0, 3, 7, 0, 8, 2, 0
   }
   , 
   {
-    0, 0, 0, 0, 0, 0, 0, 3, 0
+    2, 4, 7, 0, 0, 1, 0, 0, 6
   }
   , 
   {
-    0, 3, 4, 5, 0, 0, 8, 0, 0
+    0, 0, 0, 6, 3, 7, 9, 4, 0
   }
   , 
   {
-    0, 8, 0, 2, 0, 0, 9, 0, 0
+    6, 0, 3, 2, 0, 0, 5, 1, 0
   }
 };
+
+
 PFont f;
 IntList inventory;
 IntList pencilmark;
@@ -106,7 +109,7 @@ void checkPoss() {
   for (int n = 0; inventory.get(0) == 0; n = 0) { //removes "0" values
     inventory.remove(0);
   }
-  println("Inventory: " + inventory);
+  //println("Inventory: " + inventory);
   for (int n = 1; n < inventory.size(); n = n +1) { //removes duplicates
     if (inventory.get(n) == inventory.get(n-1)) {
       inventory.remove(n);
@@ -118,11 +121,13 @@ void checkPoss() {
       pencilmark.append(n);
     }
   }
-  println("Inventory: " + inventory);
-  println("Pencilmark: " + pencilmark);
+  //println("Inventory: " + inventory);
+  //println("Pencilmark: " + pencilmark);
   
-  if (pencilmark.size() == 1){
+  if (pencilmark.size() == 1){                // Fills in pencilmark to startSheet
    startSheet[x][y] = pencilmark.get(0); 
+    String logFile = "X: "+ x + " Y: " + y + " Solution: " + pencilmark.get(0);
+    println(logFile);
   }
   
 }
@@ -135,7 +140,7 @@ void highlight() { //draws a marker on where the mousepointer is
     rect(mouseX-10, mouseY-10, 20, 20);
     x = (mouseX-300)/(160/8); //determines which cell the mouse hovers over. (165 is the hight of the sheet, 9 is the number of cells)
     y = (mouseY-20)/(160/8);
-    println(mouseX+ " " + mouseY + " X: " + x + " Y: " + y);
+//    println(mouseX+ " " + mouseY + " X: " + x + " Y: " + y);
     stroke(0);
     fill(0);
   }
@@ -146,9 +151,9 @@ void runthrough(){
  for (x = 0; x < 9; x = x +1){
   for (y = 0; y < 9; y = y +1){
     if (startSheet[x][y] == 0){
-    println("runthrough x: " + x + " y: " + y);
+    //println("runthrough x: " + x + " y: " + y);
     checkPoss();
-    background(200);
+    background(255);
     drawStartSheet();
     drawSolutionSheet();
   }}}
