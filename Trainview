@@ -1,0 +1,112 @@
+//Trainview attempt to show movement.
+
+int ax = 100;
+int ay = 100;
+int bx = 200;
+int by = 400;
+int cx = 400;
+int cy = 400;
+int dx = 600;
+int dy = 500;
+int startx;
+int stopx;
+int starty;
+int stopy;
+float speed = 0.005;
+float travel = 0;
+int route = 0;
+void setup() {
+  size(800, 600);
+  background(255);
+  changeStation();
+}
+
+void draw() {
+  background(255);
+  drawlines();
+  drawStation();
+  updateDot();
+}
+
+void updateDot() {
+  float x = lerp(startx, stopx, travel);
+  float y = lerp(starty, stopy, travel);
+  strokeWeight(2);
+  fill(0,255,255);
+  
+  ellipse(x, y, 10, 10);
+  travel += speed;
+  if (travel >= 1) {
+    travel = 0;
+    route += 1;
+    changeStation();
+  }
+}
+
+void changeStation() {
+  if (route > 5) {
+    route = 0;
+  }
+  switch(route) {
+  case 0:
+    startx = ax;
+    starty = ay;
+    stopx = bx;
+    stopy = by;
+    println("rute: " + route);
+    break;
+  case 1:
+    startx = bx;
+    starty = by;
+    stopx = cx;
+    stopy = cy;
+    println("rute: " + route);
+    break;
+      case 2:
+    startx = cx;
+    starty = cy;
+    stopx = dx;
+    stopy = dy;
+    println("rute: " + route);
+    break;
+      case 3:
+    startx = dx;
+    starty = dy;
+    stopx = cx;
+    stopy = cy;
+    println("rute: " + route);
+    break;
+  case 4:
+    startx = cx;
+    starty = cy;
+    stopx = bx;
+    stopy = by;
+    println("rute: " + route);
+    break;
+  case 5:
+    startx = bx;
+    starty = by;
+    stopx = ax;
+    stopy = ay;
+    println("rute: " + route);
+    break;
+    
+  }
+}
+
+void drawStation() {
+  fill(0,255,100);
+  strokeWeight(3);
+  stroke(50);
+  ellipse(ax, ay, 10, 10);
+  ellipse(bx, by, 10, 10);
+  ellipse(cx, cy, 10, 10);
+  ellipse(dx, dy, 10, 10);
+}
+
+void drawlines() {
+  stroke(0,255,100);
+  line(ax, ay, bx, by);
+  line(bx, by, cx, cy);
+line(cx,cy,dx,dy);
+}
